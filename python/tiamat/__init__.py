@@ -1,4 +1,4 @@
-from orbital_simulator.orbital_simulator import (
+from tiamat.tiamat import (
 	get_version
 )
 
