@@ -1,0 +1,13 @@
+[package]
+name = "tiamat"
+version = "0.1.0"
+authors = ["mchris9913 <mchris9913@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ndarray = "0.15.6"
+pyo3 = {version = "0.21.0", features = ["abi3-py38"]}
+
