@@ -45,3 +45,16 @@ class integrator(ABC):
     def get_output(self) -> tuple:
         return (np.array(self.x), np.array(self.t))
     
+    
+class interpolator(ABC):
+    
+    def __init__(self)->None:
+        return
+        
+    @abstractmethod
+    def evaluate(self, x: float)->np.ndarray:
+        pass
+        
+    @abstractmethod
+    def set_model(self)->None:
+        pass
