@@ -19,5 +19,5 @@ def rotational_dynamics(x: np.ndarray, params: tuple) -> np.ndarray:
     Iw' + w x Iw = M
     """
     I, M = params
-    xdot = np.linalg.inv(I) @ (M - np.outer(x, I @ x))
+    xdot = np.linalg.inv(I) @ (M - np.cross(x, I @ x))
     return x
