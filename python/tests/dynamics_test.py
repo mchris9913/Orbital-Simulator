@@ -4,7 +4,6 @@ import tiamat.dynamics_core
 
 import unittest
 import numpy as np
-import matplotlib.pyplot as plt
 
 class translational_sat(object):
     def __init__(self)->None:
