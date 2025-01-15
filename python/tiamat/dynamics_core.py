@@ -82,4 +82,14 @@ def rotational_dynamics(x: np.ndarray, params: tuple) -> np.ndarray:
     """
     I, M = params
     xdot = np.linalg.inv(I) @ (M - np.cross(x, I @ x))
-    return x
+    return xdot
+    
+def quaternion_kinematics(x: np.ndarray, params: tuple) -> np.ndarray:
+    def W(q: np.ndarray)->np.ndarray:
+        return np.array([[-q[1],q[0],q[3],q[2]],[-q[2],-q[3],q[0],q[1]],[-q[3],q[2],-q[1],q[0]]])
+    
+    ROT_IDX, QUAT_IDX = params
+    
+    q = x[QUAT_IDX] / np.linalg.norm(x[QUAT_IDX])
+    qdot = 1/2 * W(q).T @ x[ROT_IDX]   
+    return qdot
