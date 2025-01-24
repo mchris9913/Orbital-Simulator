@@ -65,6 +65,7 @@ class runge_kutta(integrator):
         
         t = [t0]
         x = [x0]
+        k = [self.f(t0,x0)]
         h = dt
         while t[-1] < tf:
             x_next, err = self.__step(x[-1], t[-1], h)
@@ -74,9 +75,10 @@ class runge_kutta(integrator):
                 
             t.append(t[-1]+h)
             x.append(x_next)
+            k.append(self.f(t[-1], x[-1]))
             h = dt
             
-        return (np.array(x), np.array(t))
+        return (np.array(x), np.array(t), np.array(k))
     
     def __step(self, x: np.ndarray, t: float, h: float) -> tuple:
         k1 = h * self.f(t + self.A1*h, x)
@@ -88,7 +90,7 @@ class runge_kutta(integrator):
         return (x + self.CH1*k1 + self.CH2*k2 + self.CH3*k3 + self.CH4*k4 + self.CH5*k5 + self.CH6*k6, np.abs(self.CT1*k1 + self.CT2*k2 + self.CT3*k3 + self.CT4*k4 + self.CT5*k5 + self.CT6*k6))
         
     def solve(self, t: np.ndarray, dt: float = 1, eps: float = 1e-6)->np.ndarray:
-        x_rk, t_rk = self.integrate(t[-1], dt=dt, eps=eps)
+        x_rk, t_rk, k_rk = self.integrate(t[-1], dt=dt, eps=eps)
         
         x = []
         
