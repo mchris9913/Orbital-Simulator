@@ -91,27 +91,5 @@ class runge_kutta(integrator):
         
     def solve(self, t: np.ndarray, dt: float = 1, eps: float = 1e-6)->np.ndarray:
         x_rk, t_rk, k_rk = self.integrate(t[-1], dt=dt, eps=eps)
-        
-        x = []
-        
-        i = 0
-        j = 0
-        update_model = True
-        while i < len(t):
-            while j < len(t_rk)-1:
-                if t_rk[j] == t[i]:
-                    x.append(x_rk[j])
-                    break
-                elif t_rk[j] < t[i] and t_rk[j+1] > t[i]:
-                    if update_model:
-                        self.spline.set_model((t_rk[j], x_rk[j], self.f(t_rk[j], x_rk[j])),(t_rk[j+1], x_rk[j+1], self.f(t_rk[j+1], x_rk[j+1])))
-                        update_model = False
-                        
-                    x_next = self.spline.evaluate(t[i])
-                    x.append(x_next)
-                    break
-                j += 1
-                update_model = True
-            i += 1
-        
-        return np.array(x)
+        x = self.spline.interpolate(t, (t_rk, x_rk, k_rk))
+        return x

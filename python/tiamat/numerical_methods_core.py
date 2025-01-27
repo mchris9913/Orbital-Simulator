@@ -52,9 +52,5 @@ class interpolator(ABC):
         return
         
     @abstractmethod
-    def evaluate(self, x: float)->np.ndarray:
-        pass
-        
-    @abstractmethod
-    def set_model(self)->None:
+    def interpolate(self, t: np.ndarray, data: tuple) -> np.ndarray:
         pass
